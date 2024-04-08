@@ -21,7 +21,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'sudo rsync-av /target/*.war/ /opt/tomcat/webapps/'
+                sh 'sudo rsync -av /target/*.war/ /opt/tomcat/webapps/'
             }
         }
 
