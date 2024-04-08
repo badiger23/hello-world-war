@@ -1,6 +1,3 @@
-
-CICD Pipeline:
-
 pipeline {
     agent {
   label 'node1'
