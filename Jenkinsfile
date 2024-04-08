@@ -1,38 +1,34 @@
-pipeline{
-    agent {
-  label 'docker'
-} 
-environment {
-		DOCKER_LOGIN_CREDENTIALS=credentials('dockerhostpush')
-	}
+
+CICD Pipeline:
+
+pipeline {
+    agent any
+
     stages {
-  stage('checkout') {
-    steps {
-      git 'https://github.com/DivyaChilukuri/hello-world-war.git'
+        stage('Checkout') {
+            steps {
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/artisantek/java-example.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Push') {
+            steps {
+                echo 'This is Push Stage'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'sudo cp target/works-with-heroku-1.0.war /opt/tomcat/apache-tomcat-9.0.68/webapps/'
+            }
+        }
+
     }
-  }
-
-  stage('build') {
-    steps {
-      sh 'mvn clean install'
-      sh 'docker build -t divyachilukuri/divya:$BUILD_NUMBER .' 
-
-    }
-  }
-
-  stage('push') {
-    steps {
-      sh 'echo $DOCKER_LOGIN_CREDENTIALS_PSW | docker login -u $DOCKER_LOGIN_CREDENTIALS_USR --password-stdin'
-      sh 'docker push divyachilukuri/divya:$BUILD_NUMBER'
-    }
-  }
-
-  stage('deploy') {
-    steps {
-      sh "docker run -itd -p 8080:8080 divyachilukuri/divya:$BUILD_NUMBER"
-    }
-  }
-
-}
 
 }
