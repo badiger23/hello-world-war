@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    stages {
+        stage('checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/adibali/first-repo.git'
+            }
+        }
+        stage('test') {
+            steps {
+                echo "running static test on code"
+            }
+        }
+        stage('build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+        stage('deploy') {
+            steps {
+               
+                 sh 'rsync /var/lib/jenkins/workspace/thirdjob/target/*.war ec2-user@18.223.241.253:/opt/tomcat/webapps/'
+                }
+            }
+        }
+    }
