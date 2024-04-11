@@ -19,7 +19,7 @@ pipeline {
         stage('deploy') {
             steps {
                
-                 sh 'rsync /var/lib/jenkins/workspace/thirdjob/target/*.war ec2-user@18.223.241.253:/opt/tomcat/webapps/'
+                 sh 'rsync /var/lib/jenkins/workspace/thirdjob/target/*.war ec2-user@18.223.241.253:/home/ec2-user/tomcat/webapps'
                 }
             }
         }
