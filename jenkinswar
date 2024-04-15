@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/adibali/hello-world-war.git'
+                git branch: 'master', url: 'https://github.com/badiger23/hello-world-war.git'
             }
         }
         stage('test') {
@@ -19,7 +19,7 @@ pipeline {
         stage('deploy') {
             steps {
                
-                 sh 'rsync /var/lib/jenkins/workspace/thirdjob/target/*.war ec2-user@18.223.241.253:/home/ec2-user/tomcat/webapps'
+                 sh 'rsync /var/lib/jenkins/workspace/thirdjob/target/*.war ec2-user@143.205.112.216:/home/ec2-user/tomcat/webapps'
                 }
             }
         }
